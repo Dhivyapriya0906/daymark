@@ -1,0 +1,2 @@
+package com.taskmanager.dto; import com.taskmanager.entity.Task; import com.taskmanager.enums.*; import java.time.*;
+public record TaskResponse(Long id,String title,String description,LocalDate dueDate,TaskStatus status,TaskPriority priority,Instant createdAt,Instant updatedAt){public static TaskResponse from(Task t){return new TaskResponse(t.getId(),t.getTitle(),t.getDescription(),t.getDueDate(),t.getStatus(),t.getPriority(),t.getCreatedAt(),t.getUpdatedAt());}}

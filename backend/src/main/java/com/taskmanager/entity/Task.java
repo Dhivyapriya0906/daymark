@@ -1,0 +1,8 @@
+package com.taskmanager.entity;
+import com.taskmanager.enums.*; import jakarta.persistence.*; import java.time.*;
+@Entity @Table(name="tasks",indexes=@Index(columnList="owner_id,status")) public class Task {
+ @Id @GeneratedValue(strategy=GenerationType.IDENTITY) private Long id; @Column(nullable=false,length=160) private String title; @Column(length=4000) private String description; private LocalDate dueDate; @Enumerated(EnumType.STRING) @Column(nullable=false,length=20) private TaskStatus status=TaskStatus.PENDING; @Enumerated(EnumType.STRING) @Column(nullable=false,length=20) private TaskPriority priority=TaskPriority.MEDIUM; @Column(nullable=false,updatable=false) private Instant createdAt=Instant.now(); @Column(nullable=false) private Instant updatedAt=Instant.now(); @ManyToOne(fetch=FetchType.LAZY,optional=false) @JoinColumn(name="owner_id",nullable=false) private User owner;
+ protected Task(){} public Task(String title,String description,LocalDate dueDate,TaskStatus status,TaskPriority priority,User owner){this.title=title;this.description=description;this.dueDate=dueDate;this.status=status;this.priority=priority;this.owner=owner;}
+ @PreUpdate void touch(){updatedAt=Instant.now();} public void update(String t,String d,LocalDate due,TaskStatus s,TaskPriority p){title=t;description=d;dueDate=due;status=s;priority=p;}
+ public Long getId(){return id;} public String getTitle(){return title;} public String getDescription(){return description;} public LocalDate getDueDate(){return dueDate;} public TaskStatus getStatus(){return status;} public TaskPriority getPriority(){return priority;} public Instant getCreatedAt(){return createdAt;} public Instant getUpdatedAt(){return updatedAt;}
+}

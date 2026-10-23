@@ -1,0 +1,1 @@
+import api from './api';export const taskService={list:async params=>(await api.get('/tasks',{params})).data,stats:async()=>(await api.get('/tasks/stats')).data,create:async data=>(await api.post('/tasks',data)).data,update:async(id,data)=>(await api.put(`/tasks/${id}`,data)).data,remove:async id=>api.delete(`/tasks/${id}`)};
